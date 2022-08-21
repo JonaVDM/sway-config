@@ -1,37 +1,16 @@
 [
   {
-    "name": "workspaces",
-    "layer": "top",
-    "position": "left",
-    "modules-center": [
-      "sway/workspaces"
-    ],
-    "sway/workspaces": {
-      "persistent_workspaces": {
-        "1": [],
-        "2": [],
-        "9": [],
-        "10": []
-      },
-      "format": "{icon}",
-      "format-icons": {
-        "1": "",
-        "2": "",
-        "9": "ﭮ",
-        "10": "ﱘ"
-      }
-    }
-  },
-  {
     "name": "menubar",
     "layer": "top",
     "position": "top",
     "modules-left": [
+      "sway/workspaces",
       "sway/mode",
       "sway/window"
     ],
     "modules-right": [
       "tray",
+      "sway/language",
       "pulseaudio#out",
       "pulseaudio#in",
       "clock",
@@ -68,6 +47,25 @@
     },
     "tray": {
       "spacing": 10
+    },
+    "sway/language": {
+      "format": "{flag} {}",
+      "on-click": "swaymsg input type:keyboard xkb_switch_layout next", 
+    },
+    "sway/workspaces": {
+      "persistent_workspaces": {
+        "1": [],
+        "2": [],
+        "9": [],
+        "10": []
+      },
+      "format": "{icon}",
+      "format-icons": {
+        "1": "",
+        "2": "",
+        "9": "ﭮ",
+        "10": "ﱘ"
+      }
     }
   }
 ]

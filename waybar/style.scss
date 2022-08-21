@@ -12,26 +12,6 @@ $textcolor: #eceff4;
   font-size: 14px;
 }
 
-window#waybar.workspaces {
-  background-color: transparent;
-
-  .modules-center {
-    background-color: $background;
-    margin-left: 2px;
-    border-radius: 20px;
-
-    padding: 15px 0;
-  }
-
-  button.focused {
-    color: $blue;
-  }
-
-  button {
-    color: $text;
-  }
-}
-
 window#waybar.menubar {
   background-color: $background;
   color: $text;
@@ -54,6 +34,18 @@ window#waybar.menubar {
     padding: 0 6px;
     background-color: $yellow;
     color: black;
+  }
+
+  #workspaces {
+    margin-right: 10px;
+    button {
+      padding: 0 6px;
+      color: $text;
+    }
+
+    button.focused {
+      color: $blue;
+    }
   }
 }
 
