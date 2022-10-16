@@ -16,6 +16,7 @@ set $term kitty
 set $menu rofi -show drun
 set $browser firefox
 set $files thunar
+set $discord bash ~/.sway-config/sway/scripts/discord.bash
 
 # Script to go into floating mode
 set $floating ~/.config/sway/scripts/floating.bash
@@ -70,6 +71,7 @@ input "type:pointer" {
     bindsym $mod+e exec $files
     bindsym $mod+Shift+e exec $floating $files
     bindsym $mod+m exec $term -e ncspot
+    bindsym $mod+d exec $discord
 
     # Kill focused window
     bindsym $mod+Shift+q kill
@@ -138,7 +140,7 @@ input "type:pointer" {
     bindsym $mod+Shift+space floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+d focus mode_toggle
+    bindsym $mod+s focus mode_toggle
 
     # Move focus to the parent container
     bindsym $mod+a focus parent

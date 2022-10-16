@@ -54,7 +54,7 @@ A quick overview from all the keybindings used in the sway config. The
 | Mod + Shift + 1..0         | Move window to workspace 1..0                    |
 | Mod + f                    | Toggle fullscreen on current window              |
 | Mod + Shift + Space        | Toggle floating window mode for current screen   |
-| Mod + d                    | Toggle focus between floating and tiling windows |
+| Mod + s                    | Toggle focus between floating and tiling windows |
 | Mod + a                    | Toggle focus to the parent window                |
 | Mod + Shift + Minus        | Move window to scratchpad                        |
 | Mod + Minus                | Show application in scratchpad                   |
@@ -69,6 +69,8 @@ A quick overview from all the keybindings used in the sway config. The
 | Mod + Print                | Make a screenshot                                |
 | Mod + Shift + Print        | Make a screenshot of selection                   |
 | Mod + r                    | Go into resize mode                              |
+| Mod + m                    | Open ncspot (spotify)                            |
+| mod + d                    | Open Discord                                     |
 
 ## Styles for waybar
 
