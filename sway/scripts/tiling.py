@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 This script uses the i3ipc python module to switch the layout splith / splitv
 for the currently focused window, depending on its dimensions.
@@ -45,9 +47,30 @@ def save_string(string, file):
         print(e)
 
 
-def switch_splitting(i3, e, debug, workspaces):
+def output_name(con):
+    if con.type == "root":
+        return None
+
+    if p := con.parent:
+        if p.type == "output":
+            return p.name
+        else:
+            return output_name(p)
+
+
+def switch_splitting(i3, e, debug, outputs, workspaces, depth_limit):
     try:
         con = i3.get_tree().find_focused()
+        output = output_name(con)
+        # Stop, if outputs is set and current output is not in the selection
+        if outputs and output not in outputs:
+            if debug:
+                print(
+                    "Debug: Autotiling turned off on output {}".format(output),
+                    file=sys.stderr,
+                )
+            return
+
         if con and not workspaces or (str(con.workspace().num) in workspaces):
             if con.floating:
                 # We're on i3: on sway it would be None
@@ -56,6 +79,31 @@ def switch_splitting(i3, e, debug, workspaces):
             else:
                 # We are on sway
                 is_floating = con.type == "floating_con"
+
+            if depth_limit:
+                # Assume we reached the depth limit, unless we can find a workspace
+                depth_limit_reached = True
+                current_con = con
+                current_depth = 0
+                while current_depth < depth_limit:
+                    # Check if we found the workspace of the current container
+                    if current_con.type == "workspace":
+                        # Found the workspace within the depth limitation
+                        depth_limit_reached = False
+                        break
+
+                    # Look at the parent for next iteration
+                    current_con = current_con.parent
+
+                    # Only count up the depth, if the container has more than
+                    # one container as child
+                    if len(current_con.nodes) > 1:
+                        current_depth += 1
+
+                if depth_limit_reached:
+                    if debug:
+                        print("Debug: Depth limit reached")
+                    return
 
             is_full_screen = con.fullscreen_mode == 1
             is_stacked = con.parent.layout == "stacked"
@@ -93,12 +141,25 @@ def main():
                         action="version",
                         version="%(prog)s {}, Python {}".format(__version__, sys.version),
                         help="display version information", )
+    parser.add_argument("-o",
+                        "--outputs",
+                        help="restricts autotiling to certain output; "
+                        "example: autotiling --output  DP-1 HDMI-0",
+                        nargs="*",
+                        type=str,
+                        default=[], )
     parser.add_argument("-w",
                         "--workspaces",
                         help="restricts autotiling to certain workspaces; example: autotiling --workspaces 8 9",
                         nargs="*",
                         type=str,
                         default=[], )
+    parser.add_argument("-l",
+                        "--limit",
+                        help='limit how often autotiling will split a container; '
+                        'try "2", if you like master-stack layouts; default: 0 (no limit)',
+                        type=int,
+                        default=0, )
     """
     Changing event subscription has already been the objective of several pull request. To avoid doing this again
     and again, let's allow to specify them in the `--events` argument.
@@ -112,18 +173,31 @@ def main():
 
     args = parser.parse_args()
 
+    if args.debug and args.outputs:
+        print("autotiling is only active on outputs:", ",".join(args.outputs))
+
     if args.debug and args.workspaces:
         print("autotiling is only active on workspaces:", ','.join(args.workspaces))
 
     # For use w/ nwg-panel
+    ws_file = os.path.join(temp_dir(), "autotiling")
     if args.workspaces:
-        save_string(','.join(args.workspaces), os.path.join(temp_dir(), "autotiling"))
+        save_string(','.join(args.workspaces), ws_file)
+    else:
+        if os.path.isfile(ws_file):
+            os.remove(ws_file)
 
     if not args.events:
         print("No events specified", file=sys.stderr)
         sys.exit(1)
 
-    handler = partial(switch_splitting, debug=args.debug, workspaces=args.workspaces)
+    handler = partial(
+        switch_splitting,
+        debug=args.debug,
+        outputs=args.outputs,
+        workspaces=args.workspaces,
+        depth_limit=args.limit,
+    )
     i3 = Connection()
     for e in args.events:
         try:
