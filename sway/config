@@ -28,7 +28,7 @@ gaps inner 5
 gaps outer 0
 
 # Remove text from title bar
-font pango:monospace 0
+font pango:monospace 1 
 titlebar_border_thickness 0
 titlebar_padding 5
 
