@@ -2,7 +2,9 @@ $text: #eceff4;
 $background: #2e3440;
 $red: #bf616a;
 $blue: #5e81ac;
-$green: #8fbcbb;
+$green: #a3be8c;
+$orange: #d08770;
+$frost-green: #8fbcbb;
 $yellow: #ebcb8b;
 $highlightmodule: #4c566a;
 $textcolor: #eceff4;
@@ -52,4 +54,16 @@ window#waybar.menubar {
 #custom-powermenu {
   color: $red;
   font-size: 1.4rem;
+}
+
+#cpu {
+  color: $yellow;
+}
+
+#memory {
+  color: $orange;
+}
+
+#pulseaudio {
+  color: $green;
 }

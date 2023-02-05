@@ -8,9 +8,12 @@
       "sway/mode",
       "sway/window"
     ],
+    "modules-center": ["custom/media"],
     "modules-right": [
       "tray",
       "sway/language",
+      "cpu",
+      "memory",
       "pulseaudio#out",
       "pulseaudio#in",
       "clock",
@@ -66,6 +69,26 @@
         "9": "ﭮ",
         "10": "ﱘ"
       }
+    },
+    "cpu": {
+      "interval": 5,
+      "format": " {usage}%",
+    },
+    "memory": {
+      "interval": 5,
+      "format": " {}%",
+    },
+     "custom/media": {
+      "format": "{icon} {}",
+      "return-type": "json",
+      "max-length": 50,
+      "format-icons": {
+        "spotify": "",
+        "ncspot": "",
+        "default": "🎜"
+      },
+      "escape": true,
+      "exec": "/bin/python3 $HOME/.config/waybar/custom_modules/mediaplayer.py 2> /dev/null"
     }
   }
 ]
