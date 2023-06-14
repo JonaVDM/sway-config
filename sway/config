@@ -21,7 +21,7 @@ set $discord bash ~/.sway-config/sway/scripts/discord.bash
 # Script to go into floating mode
 set $floating ~/.config/sway/scripts/floating.bash
 
-output * bg ~/Pictures/wallpaper.png fill
+output * bg ~/.sway-config/pictures/baby.jpg fill
 
 # Gaps
 gaps inner 5
@@ -67,11 +67,11 @@ input "type:pointer" {
     bindsym $mod+Return exec $term -e tmux
     bindsym $mod+Ctrl+Return exec $term
     bindsym $mod+Shift+Return exec $floating $term
-    bindsym $mod+b exec $browser
+    bindsym $mod+b exec MOZ_ENABLE_WAYLAND=1 $browser
     bindsym $mod+e exec $files
     bindsym $mod+Shift+e exec $floating $files
     bindsym $mod+m exec $term -e ncspot
-    bindsym $mod+d exec $discord
+    bindsym $mod+d exec MOZ_ENABLE_WAYLAND=1 $discord
 
     # Kill focused window
     bindsym $mod+Shift+q kill

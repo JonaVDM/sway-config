@@ -24,7 +24,7 @@
       "format-alt": "{:%Y-%m-%d}"
     },
     "custom/powermenu": {
-      "format": "襤",
+      "format": "󰐥",
       "on-click": "rofi -show power-menu -modi \"power-menu:rofi-power-menu --choices=shutdown/reboot/logout\""
     },
     "pulseaudio#out": {
@@ -66,8 +66,8 @@
       "format-icons": {
         "1": "",
         "2": "",
-        "9": "ﭮ",
-        "10": "ﱘ"
+        "9": "󰙯",
+        "10": "󰓇"
       }
     },
     "cpu": {
@@ -76,7 +76,7 @@
     },
     "memory": {
       "interval": 5,
-      "format": " {}%",
+      "format": "󰍛 {}%",
     },
     "mpris": {
       "format": "{player_icon} {artist} - {title}",
